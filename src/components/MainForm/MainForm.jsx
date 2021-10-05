@@ -1,27 +1,24 @@
 import React from "react";
-import Button from '@material-ui/core/Button';
+import { TextField , Button , Switch , FormControlLabel } from "@material-ui/core";
 
 function MainForm(){
     return(
         <div>
-            <form >
-                <label>Nome</label>
-                <input type="text"/>
+            <form className="">
+                <TextField id="name" label="Name" variant="outlined" fullWidth={true} margin="dense"/>
 
-                <label>Sobrenome</label>
-                <input type="text"/>
+                <TextField id="surname" label="Surname" variant="outlined" fullWidth={true} margin="dense"/>
 
-                <label>CPF</label>
-                <input type="text"/>
+                <TextField id="cpf" label="CPF" variant="outlined" fullWidth={true} margin="dense"/>
 
-                <label>Promoções</label>
-                <input type="checkbox"/>
+                <FormControlLabel label="Offers" control={<Switch name="offers" defaultChecked />}/>
+                {/* <Switch name="offers" defaultChecked /> */}
 
-                <label>Novidades</label>
-                <input type="checkbox"/>
+                <FormControlLabel label="News" control={<Switch name="news" defaultChecked />}/>
+                {/* <Switch name="news" defaultChecked /> */}
 
                 <Button variant="contained" color="primary" type="submit">
-                    Botão
+                    Submit
                 </Button>
             </form>
         </div>
