@@ -5,7 +5,6 @@ function MainForm(){
     return(
         <div>
             <form className="">
-                <p>Oi</p>
                 <TextField id="name" label="Name" variant="outlined" fullWidth={true} margin="dense"/>
 
                 <TextField id="surname" label="Surname" variant="outlined" fullWidth={true} margin="dense"/>
