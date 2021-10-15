@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import { TextField , Button , Switch , FormControlLabel } from "@material-ui/core";
 
-function MainForm({onSend}){
+function MainForm({onSend, validateCPF}){
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
     const [cpf, setCpf] = useState("")
     const [offers, setOffers] = useState(true)
     const [news, setNews] = useState(true)
+    const [errors, SetErrors] = useState({cpf:{valid:true, text:""}})
 
     return(
         <div>
@@ -46,12 +47,20 @@ function MainForm({onSend}){
                 onChange={(e) => {
                     setCpf(e.target.value)
                 }}
+                onBlur={
+                    (e) => {
+                        console.log(e.target.value)
+                        console.log(e.target.value.length)
+                        const isValid = validateCPF(e.target.value)
+                        SetErrors({cpf:isValid})
+                }}
                 id="cpf" 
                 label="CPF" 
                 variant="outlined"
                 fullWidth={true} 
-                margin="dense"/>
-
+                margin="dense"
+                helperText={errors.cpf.text}
+                error={!errors.cpf.valid}/>
                 <FormControlLabel
                 label="Offers" 
                 control={<Switch onChange={(e) => {
