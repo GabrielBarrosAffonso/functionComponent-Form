@@ -25,6 +25,7 @@ function PersonalData({onSend, validateCPF}){
                     }
                     setName(tempName)
                 }} 
+                required
                 id="name" 
                 label="Name" 
                 variant="outlined" 
@@ -32,6 +33,7 @@ function PersonalData({onSend, validateCPF}){
                 margin="dense"/>
 
                 <TextField 
+                required
                 value={surname}
                 onChange={(e) => {
                     setSurname(e.target.value)
