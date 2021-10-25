@@ -1,26 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PersonalData from "./PersonalData";
 import UserData from "./UserData";
 import ShippingData from "./ShippingData";
+import { Typography } from "@material-ui/core";
+import { Stepper , Step , StepLabel } from "@mui/material";
 
 function MainForm({onSend, validateCPF}){
     const [actualStep, setActualStep] = useState(0)
+    const [collectedData, setCollectedData] = useState({})
+    useEffect(() => {
+        if(actualStep === forms.length-1){
+            onSend(collectedData)
+        }
+    }, [collectedData])
+
     const forms = [
-        <UserData onSend={nextStep}/>, 
-        <PersonalData onSend={nextStep} validateCPF={validateCPF}/>, 
-        <ShippingData onSend={onSend}/>
+        <UserData onSend={collectData}/>, 
+        <PersonalData onSend={collectData} validateCPF={validateCPF}/>, 
+        <ShippingData onSend={collectData}/>,
+        <Typography variant="h5" >Thanks for Submitting</Typography>
     ]
+
+    function collectData(data){
+        setCollectedData({...collectedData, ...data});
+        nextStep()
+    }
+
 
     function nextStep(){
         setActualStep(actualStep+1)
     }
 
-    function previousStep(){
-        setActualStep(actualStep-1)
-    }
 
     return(
         <div>
+            <Stepper activeStep={actualStep}>
+                <Step><StepLabel>Login</StepLabel></Step>
+                <Step><StepLabel>Personal</StepLabel></Step>
+                <Step><StepLabel>Shipping</StepLabel></Step>
+                <Step><StepLabel>Finish</StepLabel></Step>
+            </Stepper>
             {
             /* {momentForm(actualStep)} */
             forms[actualStep]
