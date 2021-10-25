@@ -5,7 +5,7 @@ import ShippingData from "./ShippingData";
 import { Typography } from "@material-ui/core";
 import { Stepper , Step , StepLabel } from "@mui/material";
 
-function MainForm({onSend, validateCPF}){
+function MainForm({onSend}){
     const [actualStep, setActualStep] = useState(0)
     const [collectedData, setCollectedData] = useState({})
     useEffect(() => {
@@ -16,7 +16,7 @@ function MainForm({onSend, validateCPF}){
 
     const forms = [
         <UserData onSend={collectData}/>, 
-        <PersonalData onSend={collectData} validateCPF={validateCPF}/>, 
+        <PersonalData onSend={collectData}/>, 
         <ShippingData onSend={collectData}/>,
         <Typography variant="h5" >Thanks for Submitting</Typography>
     ]

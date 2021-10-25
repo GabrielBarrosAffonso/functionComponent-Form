@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { TextField , Button , Switch , FormControlLabel } from "@material-ui/core";
+import ValidationsSignIn from "../../contexts/ValidationsSignIn";
 
-function PersonalData({onSend, validateCPF}){
+function PersonalData({onSend}){
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
     const [cpf, setCpf] = useState("")
@@ -9,11 +10,32 @@ function PersonalData({onSend, validateCPF}){
     const [news, setNews] = useState(true)
     const [errors, SetErrors] = useState({cpf:{valid:true, text:""}})
 
+    const validations = useContext(ValidationsSignIn)
+
+    function validateFields(e){
+        console.log(e.target)
+        const {name , value} = e.target
+        let newState = {...errors}
+        newState[name] = validations[name](value)
+        SetErrors(newState)
+    }
+
+    function canSend(){
+        for(let field in errors){
+            if(!errors[field].valid){
+                return false
+            }
+        }
+        return true
+    }
+
     return(
         <div>
             <form onSubmit={(e) => {
                 e.preventDefault();
-                onSend({name, surname, cpf, news, offers})
+                if(canSend()){
+                    onSend({name, surname, cpf, news, offers})
+                }
             }}>
 
                 <TextField 
@@ -49,18 +71,13 @@ function PersonalData({onSend, validateCPF}){
                 onChange={(e) => {
                     setCpf(e.target.value)
                 }}
-                onBlur={
-                    (e) => {
-                        console.log(e.target.value)
-                        console.log(e.target.value.length)
-                        const isValid = validateCPF(e.target.value)
-                        SetErrors({cpf:isValid})
-                }}
+                onBlur={validateFields}
                 id="cpf" 
                 label="CPF" 
                 variant="outlined"
                 fullWidth={true} 
                 margin="dense"
+                name="cpf"
                 helperText={errors.cpf.text}
                 error={!errors.cpf.valid}/>
                 <FormControlLabel
@@ -78,7 +95,7 @@ function PersonalData({onSend, validateCPF}){
                 {/* <Switch name="news" defaultChecked /> */}
 
                 <Button variant="contained" color="primary" type="submit">
-                    Submit
+                    Next
                 </Button>
             </form>
         </div>

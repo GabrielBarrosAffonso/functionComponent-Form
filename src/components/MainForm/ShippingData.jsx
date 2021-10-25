@@ -29,7 +29,7 @@ function ShippingData({onSend}){
                 <TextField 
                     value={city} onChange={(e) => {setCity(e.target.value)}}
                     id="city" label="city" type="text" variant="outlined" fullWidth={true} margin="dense"/>
-                <Button type="submit" variant="contained" color="primary" fullWidth={true}> Finish </Button>
+                <Button type="submit" variant="contained" color="primary" fullWidth={true}> Submit </Button>
             </form>
         </div>
     )
