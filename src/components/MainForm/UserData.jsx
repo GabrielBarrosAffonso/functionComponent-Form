@@ -1,29 +1,13 @@
 import React, { useState , useContext } from "react";
 import {TextField, Button} from "@material-ui/core"
 import ValidationsSignIn from "../../contexts/ValidationsSignIn";
+import useErrors from "../../hooks/useErrors";
 
 function UserData({onSend}){
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-
-    const [errors, setErrors] = useState({password:{valid:true, text:""}})
-
     const validations = useContext(ValidationsSignIn)
-    function validateFields(e){
-        const {name , value} = e.target
-        const newState = {...errors}
-        newState[name] = validations[name](value)
-        setErrors(newState)
-    }
-
-    function canSend(){
-        for(let field in errors){
-            if(!errors[field].valid){
-                return false
-            }
-        }
-        return true
-    }
+    const [errors, validateFields, canSend] = useErrors(validations)
 
     return(
         <div>

@@ -1,6 +1,7 @@
 import React, {useState, useContext} from "react";
 import { TextField , Button , Switch , FormControlLabel } from "@material-ui/core";
 import ValidationsSignIn from "../../contexts/ValidationsSignIn";
+import useErrors from "../../hooks/useErrors";
 
 function PersonalData({onSend}){
     const [name, setName] = useState("")
@@ -8,26 +9,8 @@ function PersonalData({onSend}){
     const [cpf, setCpf] = useState("")
     const [offers, setOffers] = useState(true)
     const [news, setNews] = useState(true)
-    const [errors, SetErrors] = useState({cpf:{valid:true, text:""}})
-
     const validations = useContext(ValidationsSignIn)
-
-    function validateFields(e){
-        console.log(e.target)
-        const {name , value} = e.target
-        let newState = {...errors}
-        newState[name] = validations[name](value)
-        SetErrors(newState)
-    }
-
-    function canSend(){
-        for(let field in errors){
-            if(!errors[field].valid){
-                return false
-            }
-        }
-        return true
-    }
+    const [errors, validateFields, canSend] = useErrors(validations)
 
     return(
         <div>
